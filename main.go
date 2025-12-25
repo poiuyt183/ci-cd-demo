@@ -12,7 +12,7 @@ func init() {
 
 var (
 	ServiceName = "golang-docker-demo"
-	port        = "8100"
+	port        = "8080"
 )
 
 func main() {
