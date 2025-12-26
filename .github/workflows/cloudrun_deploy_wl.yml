@@ -30,7 +30,7 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
-          service_account: 319698294224-compute@developer.gserviceaccount.com
+          service_account: 319698294224-compute@developer123.gserviceaccount.com
 
       # Configure Docker to use Artifact Registry
       - name: Configure Docker
