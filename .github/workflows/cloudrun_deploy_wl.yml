@@ -35,7 +35,7 @@ jobs:
       # Configure Docker to use Artifact Registry
       - name: Configure Docker
         run: |
-          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+          gcloud auth ${{ env.REGION }}-docker.pkg.dev --quiet
 
       # Build and push Docker image
       - name: Build and Push Docker Image
