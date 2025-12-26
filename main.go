@@ -16,7 +16,7 @@ var (
 )
 
 func main() {
-	http.HandleFunc("/ping", func(w http.ResponseWriter, req *http.Request) {
+	http.HandleFunc("/pong", func(w http.ResponseWriter, req *http.Request) {
 		w.Write([]byte(fmt.Sprintf("ping vcl ok %s", ServiceName)))
 	})
 	fmt.Println("start service with port: ", port)
