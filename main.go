@@ -19,7 +19,7 @@ var (
 )
 
 func main() {
-	http.HandleFunc("/ngonluon", func(w http.ResponseWriter, req *http.Request) {
+	http.HandleFunc("/ngon", func(w http.ResponseWriter, req *http.Request) {
 		apiRes := os.Getenv("API_RES")
 		w.Write([]byte(apiRes))
 	})
