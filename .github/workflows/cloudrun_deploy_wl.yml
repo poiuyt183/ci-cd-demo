@@ -24,6 +24,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Create .env file from GitHub Secrets
+      - name: Create .env file
+        run: |
+          cat > .env << EOF
+          # Application Configuration
+          API_RES=${{ secrets.API_RES }}
+
+          # Container Configuration
+          CONTAINER_NAME=golang-docker
+          HOST_PORT=8080
+          CONTAINER_PORT=8080
+          RESTART_POLICY=unless-stopped
+          EOF
+
       # Authenticate to Google Cloud
       - name: Authenticate to Google Cloud
         id: auth
@@ -38,11 +52,12 @@ jobs:
         run: |
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
-      # Build and push Docker image
+      # Build and push Docker image using Docker Compose
       - name: Build and Push Docker Image
         run: |
           IMAGE="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }}"
-          docker build -t "$IMAGE" .
+          docker compose build
+          docker tag $(docker compose images -q be) "$IMAGE"
           docker push "$IMAGE"
 
       # Deploy to Cloud Run
@@ -52,6 +67,8 @@ jobs:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
           image: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }}
+          env_vars: |
+            API_RES=${{ secrets.API_RES }}
 
       - name: Show Cloud Run URL
         run: |

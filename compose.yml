@@ -1,0 +1,17 @@
+services:
+  be:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${CONTAINER_NAME:-golang-docker-be}
+    ports:
+      - "${HOST_PORT:-8080}:${CONTAINER_PORT:-8080}"
+    env_file:
+      - .env
+    restart: ${RESTART_POLICY:-unless-stopped}
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
