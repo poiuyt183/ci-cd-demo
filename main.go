@@ -23,6 +23,9 @@ func main() {
 		apiRes := os.Getenv("API_RES")
 		w.Write([]byte(apiRes))
 	})
+	http.HandleFunc("/hello", func(w http.ResponseWriter, req *http.Request) {
+		w.Write([]byte("hello"))
+	})
 	fmt.Println("start service with port: ", port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
