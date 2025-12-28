@@ -57,6 +57,7 @@ jobs:
         run: |
           IMAGE="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }}"
           docker compose build
+          docker compose images
           docker tag $(docker compose images -q be) "$IMAGE"
           docker push "$IMAGE"
 
